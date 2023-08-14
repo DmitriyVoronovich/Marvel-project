@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
+import useMarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import Skeleton from '../skeleton/Skeleton';
 
 import './charInfo.scss';
-import useMarvelService from "../../services/MarvelService";
 
 const CharInfo = (props) => {
 
@@ -19,13 +19,14 @@ const CharInfo = (props) => {
     }, [props.charId])
 
     const updateChar = () => {
-        clearError();
         const {charId} = props;
         if (!charId) {
             return;
         }
+
+        clearError();
         getCharacter(charId)
-            .then(onCharLoaded);
+            .then(onCharLoaded)
     }
 
     const onCharLoaded = (char) => {
@@ -87,7 +88,7 @@ const View = ({char}) => {
                             </li>
                         )
                     })
-                }
+                }                
             </ul>
         </>
     )

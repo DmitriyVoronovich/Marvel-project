@@ -1,38 +1,40 @@
+import {useState, useEffect} from 'react';
+import { Link } from 'react-router-dom';
+
+import useMarvelService from '../../services/MarvelService';
+import Spinner from '../spinner/Spinner';
+import ErrorMessage from '../errorMessage/ErrorMessage';
+
 import './comicsList.scss';
-import {useEffect, useState} from "react";
-import useMarvelService from "../../services/MarvelService.js";
-import ErrorMessage from "../errorMessage/ErrorMessage.js";
-import Spinner from "../spinner/Spinner.js";
-import {Link} from "react-router-dom";
 
 const ComicsList = () => {
 
     const [comicsList, setComicsList] = useState([]);
-    const [newItemLoading, setNewItemLoading] = useState(false);
+    const [newItemLoading, setnewItemLoading] = useState(false);
     const [offset, setOffset] = useState(0);
-    const [comicsEnded, setComicsEnded] = useState(false)
+    const [comicsEnded, setComicsEnded] = useState(false);
 
-    const {loading, error, getAllComics} =  useMarvelService();
+    const {loading, error, getAllComics} = useMarvelService();
 
     useEffect(() => {
         onRequest(offset, true);
     }, [])
 
     const onRequest = (offset, initial) => {
-        initial ? setNewItemLoading(false) : setNewItemLoading(true);
+        initial ? setnewItemLoading(false) : setnewItemLoading(true);
         getAllComics(offset)
-            .then(onCharListLoaded);
+            .then(onComicsListLoaded)
     }
 
-    const onCharListLoaded = (newCharList) => {
+    const onComicsListLoaded = (newComicsList) => {
         let ended = false;
-        if (newCharList.length < 8) {
+        if (newComicsList.length < 8) {
             ended = true;
         }
-        setComicsList(comicsList => [...comicsList, ...newCharList]);
-        setNewItemLoading(newItemLoading => false);
-        setOffset(offset => offset + 8);
-        setComicsEnded(comicsEnded => ended);
+        setComicsList([...comicsList, ...newComicsList]);
+        setnewItemLoading(false);
+        setOffset(offset + 8);
+        setComicsEnded(ended);
     }
 
     function renderItems (arr) {
@@ -65,8 +67,8 @@ const ComicsList = () => {
             {errorMessage}
             {spinner}
             {items}
-            <button
-                disabled={newItemLoading}
+            <button 
+                disabled={newItemLoading} 
                 style={{'display' : comicsEnded ? 'none' : 'block'}}
                 className="button button__main button__long"
                 onClick={() => onRequest(offset)}>

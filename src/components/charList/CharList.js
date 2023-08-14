@@ -14,7 +14,7 @@ const CharList = (props) => {
     const [newItemLoading, setnewItemLoading] = useState(false);
     const [offset, setOffset] = useState(210);
     const [charEnded, setCharEnded] = useState(false);
-
+    
     const {loading, error, getAllCharacters} = useMarvelService();
 
     useEffect(() => {
@@ -52,10 +52,10 @@ const CharList = (props) => {
             if (item.thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') {
                 imgStyle = {'objectFit' : 'unset'};
             }
-
+            
             return (
                 <CSSTransition key={item.id} timeout={500} classNames="char__item">
-                    <li
+                    <li 
                         className="char__item"
                         tabIndex={0}
                         ref={el => itemRefs.current[i] = el}
@@ -69,8 +69,8 @@ const CharList = (props) => {
                                 focusOnItem(i);
                             }
                         }}>
-                        <img src={item.thumbnail} alt={item.name} style={imgStyle}/>
-                        <div className="char__name">{item.name}</div>
+                            <img src={item.thumbnail} alt={item.name} style={imgStyle}/>
+                            <div className="char__name">{item.name}</div>
                     </li>
                 </CSSTransition>
             )
@@ -84,7 +84,7 @@ const CharList = (props) => {
             </ul>
         )
     }
-
+    
     const items = renderItems(charList);
 
     const errorMessage = error ? <ErrorMessage/> : null;
@@ -95,8 +95,8 @@ const CharList = (props) => {
             {errorMessage}
             {spinner}
             {items}
-            <button
-                disabled={newItemLoading}
+            <button 
+                disabled={newItemLoading} 
                 style={{'display' : charEnded ? 'none' : 'block'}}
                 className="button button__main button__long"
                 onClick={() => onRequest(offset)}>
