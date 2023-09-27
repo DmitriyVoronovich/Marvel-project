@@ -3,6 +3,7 @@
   "type": "module",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://DmitriyVoronovich.github.io/Marvel-project",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -11,6 +12,7 @@
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-helmet": "^6.1.0",
     "react-router-dom": "^6.14.2",
     "react-scripts": "4.0.3",
     "react-transition-group": "^4.4.5",
@@ -18,6 +20,8 @@
     "yup": "^1.2.0"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts --openssl-legacy-provider start",
     "build": "react-scripts build",
     "test": "react-scripts test",
